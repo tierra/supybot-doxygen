@@ -37,9 +37,7 @@ import docset, time
 
 class Doxygen(callbacks.Plugin):
     """This plugin provides quick API reference lookup. Use the "describe"
-    command for general class, and function lookups. The "parents" command
-    lists all base classes (superclasses) of the given class. The "includes"
-    command lists the required header for a given class if applicable."""
+    command for class and function lookups."""
 
     def __init__(self, irc):
         self.__parent = super(Doxygen, self)
@@ -78,8 +76,7 @@ class Doxygen(callbacks.Plugin):
         """<method> | <class> [<method>]
 
         Gives a description of the class if given, or the syntax and
-        description of the method if specified. Unless the method is a
-        global method, it's class scope must be specified."""
+        description of the method if specified."""
 
         if not self.docs_loaded:
             irc.error("Doxygen XML has not been loaded.")
@@ -101,7 +98,7 @@ class Doxygen(callbacks.Plugin):
             if reply is None:
                 reply = self.docs.get_method_desc(api_class)
                 if reply is None:
-                    irc.error("Class or global method not found.")
+                    irc.error("Class or method not found.")
                 else:
                     [irc.reply(msg.encode('utf-8')) for msg in reply]
             else:
